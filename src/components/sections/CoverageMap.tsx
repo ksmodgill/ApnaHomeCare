@@ -19,7 +19,7 @@ export default function CoverageMap() {
           <SectionHeading
             badge="Where We Serve"
             title="Home Nurses Across Muzaffarpur District"
-            subtitle="Based in Pokhraira, Muzaffarpur — we reach families in the city, nearby towns, and surrounding villages across North Bihar."
+            subtitle="Based in Muzaffarpur — we reach families in the city, nearby towns, and surrounding villages across North Bihar."
           />
         </Reveal>
 
@@ -28,7 +28,7 @@ export default function CoverageMap() {
             { value: "8+", label: "Towns & Areas" },
             { value: "24/7", label: "Dispatch" },
             { value: "<4 hrs", label: "Emergency Response" },
-            { value: "Pokhraira", label: "Primary Hub" },
+            { value: "Muzaffarpur", label: "Primary Hub" },
           ].map((stat) => (
             <div
               key={stat.label}
