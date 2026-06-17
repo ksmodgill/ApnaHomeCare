@@ -1,0 +1,90 @@
+"use client";
+
+import Image from "next/image";
+import { Check, X, Home, Building2 } from "lucide-react";
+import { COMPARISON } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
+
+export default function Comparison() {
+  return (
+    <section className="section-padding bg-surface">
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+        <Reveal>
+          <SectionHeading
+            badge="Make the Right Choice"
+            title="Home Care vs. Staying in Hospital"
+            subtitle="For many recoveries and elder care situations, home is safer, cheaper, and kinder."
+          />
+        </Reveal>
+
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+          <Reveal direction="right">
+            <article className="card-hover overflow-hidden rounded-2xl border-2 border-primary/30 bg-background shadow-lg">
+              <div className="relative h-40">
+                <Image
+                  src={IMAGES.comparison.home}
+                  alt="Patient recovering comfortably at home with nursing support"
+                  fill
+                  loading="lazy"
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="image-overlay absolute inset-0" />
+                <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
+                    <Home className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-white">
+                    Home Nursing Care
+                  </h3>
+                </div>
+              </div>
+              <ul className="space-y-3 p-5 md:p-6">
+                {COMPARISON.homeCare.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-secondary">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" strokeWidth={3} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+
+          <Reveal direction="left" delay={0.08}>
+            <article className="overflow-hidden rounded-2xl border border-border bg-background shadow-sm">
+              <div className="relative h-40">
+                <Image
+                  src={IMAGES.comparison.hospital}
+                  alt="Hospital ward environment"
+                  fill
+                  loading="lazy"
+                  className="object-cover grayscale"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-secondary/50" />
+                <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary">
+                    <Building2 className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-white">
+                    Extended Hospital Stay
+                  </h3>
+                </div>
+              </div>
+              <ul className="space-y-3 p-5 md:p-6">
+                {COMPARISON.hospitalStay.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted">
+                    <X className="mt-0.5 h-4 w-4 shrink-0 text-red-400" strokeWidth={3} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
