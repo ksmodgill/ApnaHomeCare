@@ -45,7 +45,7 @@ export default function LocationModal({
   return (
     <AnimatePresence>
       {location && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4">
+        <div className="fixed inset-0 z-[80] flex items-end justify-center p-0 sm:items-center sm:p-4">
           <motion.button
             type="button"
             aria-label="Close location details"
