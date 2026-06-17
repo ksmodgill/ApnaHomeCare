@@ -46,4 +46,4 @@ Deploy to Vercel, Netlify, or any Node.js hosting platform. Update `SITE.url` in
 
 **Apna Home Care Nursing Services**  
 Narayan Bheriyahi, Kanti, Muzaffarpur, Bihar  
-Phone: +91 7571111148
+Phone: +91 62094 95879

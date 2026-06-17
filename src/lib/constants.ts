@@ -3,9 +3,9 @@ export const SITE = {
   shortName: "Apna Home Care",
   tagline: "Professional Nursing Care at Your Home",
   url: "https://apnahomecare.in",
-  phone: "+917571111148",
-  phoneDisplay: "+91 7571111148",
-  whatsapp: "917571111148",
+  phone: "+916209495879",
+  phoneDisplay: "+91 62094 95879",
+  whatsapp: "916209495879",
   email: "info@apnahomecare.in",
   address: {
     street: "Traffic light, Aghoriya bazar, Kalambagh Rd, Pokhraira",
@@ -311,7 +311,7 @@ export const FAQS = [
   {
     question: "Can nursing care be arranged urgently?",
     answer:
-      "Absolutely. We offer emergency home nursing support with rapid response across Muzaffarpur and nearby areas. Call us at +91 7571111148 or message on WhatsApp for immediate assistance — we are available 24/7.",
+      "Absolutely. We offer emergency home nursing support with rapid response across Muzaffarpur and nearby areas. Call us at +91 62094 95879 or message on WhatsApp for immediate assistance — we are available 24/7.",
   },
   {
     question: "Are your caregivers trained?",
@@ -346,7 +346,7 @@ export const FAQS = [
   {
     question: "How do I book a home visit?",
     answer:
-      "You can book a home visit by calling +91 7571111148, messaging us on WhatsApp, or filling out the inquiry form on our website. Our care coordinator will discuss your requirements and schedule a visit promptly.",
+      "You can book a home visit by calling +91 62094 95879, messaging us on WhatsApp, or filling out the inquiry form on our website. Our care coordinator will discuss your requirements and schedule a visit promptly.",
   },
   {
     question: "Do you provide care for stroke patients?",
