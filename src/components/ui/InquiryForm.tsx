@@ -6,6 +6,7 @@ import {
   handleHomeVisitSubmit,
   validateHomeVisitFormData,
 } from "@/lib/handleHomeVisitSubmit";
+import { PATIENT_REQUIREMENT_OPTIONS } from "@/lib/constants";
 
 interface InquiryFormProps {
   variant?: "default" | "compact" | "hero";
@@ -144,15 +145,11 @@ export default function InquiryForm({
                 <option value="" disabled>
                   Select service needed
                 </option>
-                <option value="home-nursing">Home Nursing Care</option>
-                <option value="elder-care">Elder Care</option>
-                <option value="bedridden">Bedridden Patient Care</option>
-                <option value="post-surgery">Post Surgery Care</option>
-                <option value="stroke">Stroke Patient Care</option>
-                <option value="icu">ICU Setup Assistance</option>
-                <option value="injection">Injection & Dressing</option>
-                <option value="caregiver">Caregiver Services</option>
-                <option value="emergency">Emergency Nursing</option>
+                {PATIENT_REQUIREMENT_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div>

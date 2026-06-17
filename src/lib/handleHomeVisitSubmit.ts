@@ -1,12 +1,14 @@
-import emailjs from "@emailjs/browser";
-import type { EmailJSResponseStatus } from "@emailjs/browser";
+"use client";
 
-export interface HomeVisitFormData {
-  name: string;
-  phone: string;
-  location: string;
-  requirement: string;
-}
+import type { EmailJSResponseStatus } from "@emailjs/browser";
+import {
+  buildHomeVisitEmailPayload,
+  validateHomeVisitFormData,
+  type HomeVisitFormData,
+} from "./homeVisitForm";
+
+export type { HomeVisitFormData } from "./homeVisitForm";
+export { validateHomeVisitFormData } from "./homeVisitForm";
 
 function getEmailJsConfig() {
   const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
@@ -28,16 +30,6 @@ function getEmailJsConfig() {
   return { publicKey, serviceId, templateId };
 }
 
-export function validateHomeVisitFormData(
-  formData: HomeVisitFormData
-): string | null {
-  if (!formData.name.trim()) return "Please enter your name.";
-  if (!formData.phone.trim()) return "Please enter your phone number.";
-  if (!formData.location.trim()) return "Please enter your location.";
-  if (!formData.requirement.trim()) return "Please select a patient requirement.";
-  return null;
-}
-
 export async function handleHomeVisitSubmit(
   formData: HomeVisitFormData
 ): Promise<EmailJSResponseStatus> {
@@ -47,12 +39,7 @@ export async function handleHomeVisitSubmit(
     throw new Error(validationError);
   }
 
-  const payload = {
-    name: formData.name.trim(),
-    phone: formData.phone.trim(),
-    location: formData.location.trim(),
-    requirement: formData.requirement.trim(),
-  };
+  const payload = buildHomeVisitEmailPayload(formData);
 
   if (process.env.NODE_ENV === "development") {
     console.log("Sending Home Visit enquiry via EmailJS...", payload);
@@ -60,13 +47,9 @@ export async function handleHomeVisitSubmit(
 
   try {
     const { publicKey, serviceId, templateId } = getEmailJsConfig();
+    const emailjs = (await import("@emailjs/browser")).default;
 
-    const response = await emailjs.send(
-      serviceId,
-      templateId,
-      payload,
-      publicKey
-    );
+    const response = await emailjs.send(serviceId, templateId, payload, publicKey);
 
     console.log("Home Visit Enquiry Sent Successfully");
 

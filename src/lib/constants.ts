@@ -44,6 +44,18 @@ export const TRUST_STRIP = [
   { value: "Muzaffarpur", label: "Service Coverage" },
 ] as const;
 
+export const PATIENT_REQUIREMENT_OPTIONS = [
+  { value: "home-nursing", label: "Home Nursing Care" },
+  { value: "elder-care", label: "Elder Care" },
+  { value: "bedridden", label: "Bedridden Patient Care" },
+  { value: "post-surgery", label: "Post Surgery Care" },
+  { value: "stroke", label: "Stroke Patient Care" },
+  { value: "icu", label: "ICU Setup Assistance" },
+  { value: "injection", label: "Injection & Dressing" },
+  { value: "caregiver", label: "Caregiver Services" },
+  { value: "emergency", label: "Emergency Nursing" },
+] as const;
+
 export const SERVICES = [
   {
     id: "home-nursing-care",
