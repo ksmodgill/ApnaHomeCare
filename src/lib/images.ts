@@ -46,7 +46,7 @@ export const IMAGES = {
     hospital: u("photo-1519494026892-80bbd2d6fd0d", 700),
   },
   process: u("photo-1582750433449-648ed127bb54", 800),
-  emergency: u("photo-1576765798657-d43658835f75", 1000),
+  emergency: "/hero-image.png",
   faq: u("photo-1631217868264-e5b90bb5e213", 800),
   contact: {
     main: u("photo-1576091160550-2173dba999ef", 900),
