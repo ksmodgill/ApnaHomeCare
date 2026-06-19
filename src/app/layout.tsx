@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { buildMetadataFromSettings } from "@/lib/metadata";
 import { fetchSiteContent } from "@/lib/sanity-data";
+import { SiteProvider } from "@/context/SiteContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,14 +23,18 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadataFromSettings(siteContent.siteSettings);
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteContent = await fetchSiteContent();
+
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SiteProvider value={siteContent}>{children}</SiteProvider>
+      </body>
     </html>
   );
 }

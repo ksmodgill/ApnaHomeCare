@@ -5,20 +5,17 @@ import {
   getServiceSchema,
 } from "@/lib/seo";
 import { SITE } from "@/lib/constants";
-import { fetchSiteContent } from "@/lib/sanity-data";
-import { SiteProvider } from "@/context/SiteContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileCTA from "@/components/layout/MobileCTA";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
 import ContentRefreshListener from "@/components/sanity/ContentRefreshListener";
 
-export default async function SiteLayout({
+export default function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const siteContent = await fetchSiteContent();
   const schemas = [
     getLocalBusinessSchema(),
     getFAQSchema(),
@@ -27,7 +24,7 @@ export default async function SiteLayout({
   ];
 
   return (
-    <SiteProvider value={siteContent}>
+    <>
       <ContentRefreshListener />
       {schemas.map((schema, i) => (
         <script
@@ -42,6 +39,6 @@ export default async function SiteLayout({
       <MobileCTA />
       <FloatingWhatsApp />
       <div className="h-36 md:hidden" aria-hidden="true" />
-    </SiteProvider>
+    </>
   );
 }
