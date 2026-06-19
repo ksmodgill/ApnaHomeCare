@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
-import { buildMetadataFromSettings } from "@/lib/metadata";
-import { fetchSiteContent } from "@/lib/sanity-data";
-import { SiteProvider } from "@/context/SiteContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,23 +15,18 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const siteContent = await fetchSiteContent();
-  return buildMetadataFromSettings(siteContent.siteSettings);
-}
+export const metadata: Metadata = {
+  metadataBase: new URL("https://apnahomecare.in"),
+};
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const siteContent = await fetchSiteContent();
-
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="antialiased">
-        <SiteProvider value={siteContent}>{children}</SiteProvider>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
