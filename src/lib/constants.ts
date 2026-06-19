@@ -17,6 +17,10 @@ export const SITE = {
   },
   hours: "24 Hours Available",
   familiesAssisted: 500,
+  social: {
+    instagram: "https://www.instagram.com/apnahomecarenursingservices/",
+    facebook: "https://www.facebook.com/apnahomecarenursingservices/",
+  },
 } as const;
 
 export const NAV_LINKS = [

@@ -2,27 +2,41 @@
 
 import { useState } from "react";
 import { ChevronDown, Phone } from "lucide-react";
-import { FAQS, SITE } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import { useSiteContent } from "@/context/SiteContext";
+import type { FaqSection } from "@/lib/sanity-types";
 
-export default function FAQ() {
+interface FAQProps {
+  data?: FaqSection;
+}
+
+export default function FAQ({ data }: FAQProps) {
+  const { siteSettings } = useSiteContent();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  if (!data?.heading || !data.faqs?.length) return null;
+
+  const ctaText =
+    data.ctaText ||
+    (siteSettings.phoneDisplay
+      ? `Still have questions? Call ${siteSettings.phoneDisplay}`
+      : "Still have questions? Call us");
 
   return (
     <section id="faq" className="section-padding bg-surface">
       <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            badge="Questions?"
-            title="Straight Answers Before You Decide"
-            subtitle="The things families in Muzaffarpur ask us most — about cost, urgency, areas, and what a nurse actually does at home."
+            badge={data.badge}
+            title={data.heading}
+            subtitle={data.subHeading}
           />
         </Reveal>
 
         <Reveal delay={0.05}>
           <div className="space-y-2.5">
-            {FAQS.map((faq, index) => (
+            {data.faqs.map((faq, index) => (
               <div
                 key={faq.question}
                 className="overflow-hidden rounded-xl border border-border bg-background"
@@ -53,14 +67,20 @@ export default function FAQ() {
 
         <Reveal delay={0.1}>
           <p className="mt-6 text-center text-sm text-muted">
-            Still have questions?{" "}
-            <a
-              href={`tel:${SITE.phone}`}
-              className="inline-flex items-center gap-1 font-bold text-primary hover:underline"
-            >
-              <Phone className="h-4 w-4" />
-              Call {SITE.phoneDisplay}
-            </a>
+            {ctaText.includes("Call") ? (
+              <>
+                Still have questions?{" "}
+                <a
+                  href={`tel:${siteSettings.phone}`}
+                  className="inline-flex items-center gap-1 font-bold text-primary hover:underline"
+                >
+                  <Phone className="h-4 w-4" />
+                  Call {siteSettings.phoneDisplay}
+                </a>
+              </>
+            ) : (
+              ctaText
+            )}
           </p>
         </Reveal>
       </div>

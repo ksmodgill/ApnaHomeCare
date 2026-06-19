@@ -1,0 +1,12 @@
+/**
+ * Sanity Studio embedded at /studio
+ */
+import Studio from "./Studio";
+
+export const dynamic = "force-dynamic";
+
+export { metadata, viewport } from "next-sanity/studio";
+
+export default function StudioPage() {
+  return <Studio />;
+}

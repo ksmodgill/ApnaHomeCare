@@ -1,10 +1,10 @@
 "use client";
 
 import { Star, Quote } from "lucide-react";
-import { REVIEWS, FEATURED_REVIEW } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GoogleLogo from "@/components/ui/GoogleLogo";
 import Reveal, { RevealStagger, RevealItem } from "@/components/ui/Reveal";
+import type { TestimonialDocument, TestimonialsSection } from "@/lib/sanity-types";
 
 function getInitials(name: string) {
   return name
@@ -61,37 +61,59 @@ function ReviewCard({
   );
 }
 
-export default function GoogleReviews() {
+interface GoogleReviewsProps {
+  data?: TestimonialsSection;
+  testimonials?: TestimonialDocument[];
+  featuredReview?: TestimonialDocument;
+}
+
+export default function GoogleReviews({
+  data,
+  testimonials = [],
+  featuredReview,
+}: GoogleReviewsProps) {
+  if (!data?.heading || testimonials.length === 0) return null;
+
+  const featured = featuredReview || testimonials.find((t) => t.featured) || testimonials[0];
+
   return (
     <section id="reviews" className="section-padding bg-[#f8f9fa]">
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            badge="Reviews"
-            title="What Muzaffarpur Families Say About Us"
-            subtitle="Real feedback from families who trusted Apna Home Care with their loved ones."
+            badge={data.badge}
+            title={data.heading}
+            subtitle={data.subHeading}
           />
         </Reveal>
 
-        <Reveal delay={0.08}>
-          <article className="relative mb-8 overflow-hidden rounded-2xl border border-primary/20 bg-white p-6 shadow-lg md:p-8">
-            <Quote className="absolute top-4 right-4 h-10 w-10 text-primary/10" />
-            <div className="mb-4">
-              <StarRating rating={FEATURED_REVIEW.rating} />
-            </div>
-            <blockquote className="text-base leading-relaxed text-secondary md:text-lg">
-              &ldquo;{FEATURED_REVIEW.text}&rdquo;
-            </blockquote>
-            <footer className="mt-4 font-display font-bold text-secondary">
-              — {FEATURED_REVIEW.name}, {FEATURED_REVIEW.location}
-            </footer>
-          </article>
-        </Reveal>
+        {featured?.review && (
+          <Reveal delay={0.08}>
+            <article className="relative mb-8 overflow-hidden rounded-2xl border border-primary/20 bg-white p-6 shadow-lg md:p-8">
+              <Quote className="absolute top-4 right-4 h-10 w-10 text-primary/10" />
+              <div className="mb-4">
+                <StarRating rating={featured.rating || 5} />
+              </div>
+              <blockquote className="text-base leading-relaxed text-secondary md:text-lg">
+                &ldquo;{featured.review}&rdquo;
+              </blockquote>
+              <footer className="mt-4 font-display font-bold text-secondary">
+                — {featured.name}
+                {featured.location ? `, ${featured.location}` : ""}
+              </footer>
+            </article>
+          </Reveal>
+        )}
 
         <RevealStagger className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-          {REVIEWS.map((review) => (
-            <RevealItem key={review.name + review.date} className="mb-4 break-inside-avoid">
-              <ReviewCard {...review} />
+          {testimonials.map((review) => (
+            <RevealItem key={review._id} className="mb-4 break-inside-avoid">
+              <ReviewCard
+                name={review.name || "Anonymous"}
+                rating={review.rating || 5}
+                text={review.review || ""}
+                date={review.date || ""}
+              />
             </RevealItem>
           ))}
         </RevealStagger>

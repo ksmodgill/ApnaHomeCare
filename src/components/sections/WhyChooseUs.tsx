@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   ShieldCheck,
   Stethoscope,
@@ -9,52 +8,64 @@ import {
   Heart,
   Phone,
 } from "lucide-react";
-import { WHY_CHOOSE_US } from "@/lib/constants";
-import { IMAGES } from "@/lib/images";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal, { RevealStagger, RevealItem } from "@/components/ui/Reveal";
+import SanityImage from "@/components/ui/SanityImage";
+import { FALLBACK_IMAGES } from "@/lib/sanity-fallback";
+import type { WhyHomeCare } from "@/lib/sanity-types";
 
-const icons = [ShieldCheck, Stethoscope, IndianRupee, Zap, Heart, Phone];
+const defaultIcons = [ShieldCheck, Stethoscope, IndianRupee, Zap, Heart, Phone];
 
-export default function WhyChooseUs() {
+interface WhyChooseUsProps {
+  data?: WhyHomeCare;
+}
+
+export default function WhyChooseUs({ data }: WhyChooseUsProps) {
+  if (!data?.heading || !data.benefits?.length) return null;
+
   return (
     <section id="why-us" className="section-padding bg-surface">
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            badge="Why Families Choose Us"
-            title="When Your Parent Needs Care, You Shouldn't Have to Guess"
-            subtitle="Verified nurses, doctor-aligned plans, and round-the-clock support — the basics every Muzaffarpur family deserves."
+            badge={data.badge}
+            title={data.heading}
+            subtitle={data.description}
           />
         </Reveal>
 
         <div className="grid items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
           <Reveal direction="right" className="lg:col-span-5">
             <div className="relative h-full min-h-[280px] overflow-hidden rounded-2xl shadow-lg lg:min-h-0">
-              <Image
-                src={IMAGES.about.family}
+              <SanityImage
+                image={data.image}
+                fallbackSrc={FALLBACK_IMAGES.whyHomeCare}
                 alt="Nurse supporting Indian family with home patient care in Muzaffarpur"
                 fill
-                loading="lazy"
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 42vw"
               />
               <div className="image-overlay absolute inset-0" />
-              <div className="absolute right-3 bottom-3 left-3 rounded-xl bg-white/95 p-3.5 shadow-lg md:p-4">
-                <p className="text-[11px] font-bold uppercase tracking-wide text-primary">
-                  Our Standard
-                </p>
-                <p className="mt-1 text-xs leading-snug text-secondary md:text-sm">
-                  Background checks · Clinical training · Hygiene protocols · Doctor
-                  coordination · 24/7 supervision
-                </p>
-              </div>
+              {(data.overlayTitle || data.overlayText) && (
+                <div className="absolute right-3 bottom-3 left-3 rounded-xl bg-white/95 p-3.5 shadow-lg md:p-4">
+                  {data.overlayTitle && (
+                    <p className="text-[11px] font-bold uppercase tracking-wide text-primary">
+                      {data.overlayTitle}
+                    </p>
+                  )}
+                  {data.overlayText && (
+                    <p className="mt-1 text-xs leading-snug text-secondary md:text-sm">
+                      {data.overlayText}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </Reveal>
 
           <RevealStagger className="grid content-start gap-2.5 sm:grid-cols-2 lg:col-span-7 lg:gap-3">
-            {WHY_CHOOSE_US.map((item, index) => {
-              const Icon = icons[index];
+            {data.benefits.map((item, index) => {
+              const Icon = defaultIcons[index % defaultIcons.length];
               return (
                 <RevealItem key={item.title}>
                   <div className="flex h-full gap-3 rounded-xl border border-border bg-background p-3 md:p-3.5">

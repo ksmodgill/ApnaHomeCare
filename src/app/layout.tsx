@@ -1,17 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
-import { defaultMetadata } from "@/lib/metadata";
-import {
-  getLocalBusinessSchema,
-  getFAQSchema,
-  getBreadcrumbSchema,
-  getServiceSchema,
-} from "@/lib/seo";
-import { SITE } from "@/lib/constants";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import MobileCTA from "@/components/layout/MobileCTA";
-import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
+import { buildMetadataFromSettings } from "@/lib/metadata";
+import { fetchSiteContent } from "@/lib/sanity-data";
 import "./globals.css";
 
 const inter = Inter({
@@ -27,39 +17,19 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export const metadata: Metadata = defaultMetadata;
+export async function generateMetadata(): Promise<Metadata> {
+  const siteContent = await fetchSiteContent();
+  return buildMetadataFromSettings(siteContent.siteSettings);
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const schemas = [
-    getLocalBusinessSchema(),
-    getFAQSchema(),
-    getBreadcrumbSchema([{ name: "Home", url: SITE.url }]),
-    getServiceSchema(),
-  ];
-
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <head>
-        {schemas.map((schema, i) => (
-          <script
-            key={i}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-          />
-        ))}
-      </head>
-      <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <MobileCTA />
-        <FloatingWhatsApp />
-        <div className="h-36 md:hidden" aria-hidden="true" />
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

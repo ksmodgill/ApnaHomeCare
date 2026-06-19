@@ -6,15 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity": "sanity dev"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@sanity/client": "^7.23.0",
+    "@sanity/image-url": "^2.1.1",
     "framer-motion": "^12.40.0",
     "lucide-react": "^0.511.0",
     "next": "^15.3.3",
+    "next-sanity": "^13.1.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sanity": "^3.99.0",
+    "styled-components": "^6.4.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
